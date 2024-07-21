@@ -143,37 +143,37 @@ bindcode $mod+Shift+81 	 move container to workspace  $ws9
 bindcode $mod+Shift+90 	 move container to workspace  $ws10
 
 # resize window (you can also use the mouse for that):
-mode "resize" {
+#mode "resize" {
 # These bindings trigger as soon as you enter the resize mode
 # Pressing left will shrink the window's width.
 # Pressing right will grow the window's width.
 # Pressing up will shrink the window's height.
 # Pressing down will grow the window's height.
-       bindsym h resize shrink width 10 px or 10 ppt
-       bindsym j resize grow height 10 px or 10 ppt
-       bindsym k resize shrink height 10 px or 10 ppt
-        bindsym l resize grow width 10 px or 10 ppt
+#        bindsym h resize shrink width 10 px or 10 ppt
+#        bindsym j resize grow height 10 px or 10 ppt
+#        bindsym k resize shrink height 10 px or 10 ppt
+#        bindsym l resize grow width 10 px or 10 ppt
 
 # same bindings, but for the arrow keys
-        bindsym Left resize shrink width 10 px or 10 ppt
-        bindsym Down resize grow height 10 px or 10 ppt
-        bindsym Up resize shrink height 10 px or 10 ppt
-        bindsym Right resize grow width 10 px or 10 ppt
+#        bindsym Left resize shrink width 10 px or 10 ppt
+#        bindsym Down resize grow height 10 px or 10 ppt
+#        bindsym Up resize shrink height 10 px or 10 ppt
+#        bindsym Right resize grow width 10 px or 10 ppt
 
 # back to normal: Enter or Escape
-	     bindsym Return mode "default"
-        bindsym Escape mode "default"
-}
+#	     bindsym Return mode "default"
+#        bindsym Escape mode "default"
+#}
 
-bindsym $mod+r mode "resize"
+#bindsym $mod+r mode "resize"
 
 ######################################
 # keybindings for different actions: #
 ######################################
 
 # start a terminal
-bindsym $mod+Return exec --no-startup-id alacritty
-exec --no-startup-id nitrogen --restore
+bindsym $mod+Return exec --no-startup-id xfce4-terminal
+
 # kill focused window
 bindsym $mod+q kill
 
@@ -197,7 +197,6 @@ bindsym F1 exec --no-startup-id ~/.config/i3/scripts/keyhint-2
 # alternative
 # keybinding list in editor:
 # bindsym $mod+F1 exec --no-startup-id xed ~/.config/i3/keybindings
-
 
 # Backlight control
 #bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight +10 && notify-send "Brightness - $(xbacklight -get | cut -d '.' -f 1)%"
@@ -288,7 +287,7 @@ bindsym XF86AudioPrev exec --no-startup-id playerctl previous
 bindsym $mod+p exec --no-startup-id /usr/local/bin/switch-audio-port
 
 ## App shortcuts
-bindsym $mod+w exec --no-startup-id firefox
+bindsym $mod+w exec --no-startup-id /usr/bin/firefox
 bindsym $mod+n exec --no-startup-id /usr/bin/thunar
 bindsym Print exec --no-startup-id scrot ~/%Y-%m-%d-%T-screenshot.png && notify-send "Screenshot saved to ~/$(date +"%Y-%m-%d-%T")-screenshot.png"
 
@@ -301,14 +300,14 @@ bindsym $mod+Shift+p exec --no-startup-id ~/.config/i3/scripts/power-profiles
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
-set $ws1 "1:1"
-set $ws2 "2:2"
-set $ws3 "3:3"
-set $ws4 "4:4"
-set $ws5 "5:5"
-set $ws6 "6:6"
-set $ws7 "7:7"
-set $ws8 "8:8"
+set $ws1 "1:"
+set $ws2 "2:"
+set $ws3 "3:"
+set $ws4 "4:"
+set $ws5 "5:"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
 set $ws9 "9"
 set $ws10 "10"
 
@@ -321,7 +320,21 @@ set $ws10 "10"
 #workspace $ws4 output HDMI-0
 #workspace $ws5 output HDMI-0
 
-# bind program to workspace and focus to them on ##############
+# bind program to workspace and focus to them on startup:
+assign [class="Xfce4-terminal"] $ws1
+assign [class="(?i)firefox"] $ws2
+assign [class="Thunar"] $ws3
+assign [class="thunderbird"] $ws4
+assign [class="TelegramDesktop"] $ws5
+
+# automatic set focus new window if it opens on another workspace than the current:
+for_window [class=Xfce4-terminal] focus
+for_window [class=(?i)firefox] focus
+for_window [class=Thunar] focus
+for_window [class=Thunderbird] focus
+for_window [class=TelegramDesktop] focus
+
+##############
 # compositor #
 ##############
 
@@ -345,7 +358,7 @@ set $ws10 "10"
 # For modifications, it can be copied to ~/.config/picom/picom.conf or ~/.config/picom.conf
 # install picom package (yay -S picom)
 # start using default config 
-exec_always --no-startup-id picom -b
+#exec_always --no-startup-id picom -b
 #
 # for custom config:
 #exec_always --no-startup-id picom --config  ~/.config/picom.conf
@@ -383,6 +396,7 @@ exec --no-startup-id ~/.screenlayout/monitor.sh
 
 # set wallpaper
 # exec --no-startup-id sleep 2 && nitrogen --restore
+exec --no-startup-id sleep 1 && feh --bg-fill /usr/share/endeavouros/backgrounds/endeavouros-wallpaper.png
 
 # set powersavings for display:
 exec --no-startup-id xset s 480 dpms 600 600 600
@@ -416,6 +430,7 @@ exec --no-startup-id /usr/bin/dunst
 
 # Autostart apps as you like
 #exec --no-startup-id sleep 2 && xfce4-terminal
+exec --no-startup-id sleep 7 && firefox https://github.com/endeavouros-team/endeavouros-i3wm-setup/blob/main/force-knowledge.md
 #exec --no-startup-id sleep 3 && thunar
 
 ###############
@@ -473,9 +488,9 @@ set $urgentred		#e53935
 set $white		#ffffff
 set $black		#000000
 set $purple		#e345ff
-set $darkgrey		#141715
-set $grey		#6AA4B1
-set $mediumgrey		#FFFFFF
+set $darkgrey		#383c4a
+set $grey		#b0b5bd
+set $mediumgrey		#8b8b8b
 set $yellowbrown	#e1b700
 
 # define colors for windows:
@@ -483,7 +498,7 @@ set $yellowbrown	#e1b700
 client.focused		    	$lightblue	$darkblue	$white		$mediumgrey	$mediumgrey
 client.unfocused	    	$darkblue	$darkblue	$grey		$darkgrey	$darkgrey
 client.focused_inactive		$darkblue	$darkblue	$grey		$black		$black
-client.urgent		    	$grey	$grey	$white		$yellowbrown	$yellowbrown
+client.urgent		    	$urgentred	$urgentred	$white		$yellowbrown	$yellowbrown
 
 ############################################
 # bar settings (input comes from i3blocks) #
@@ -492,9 +507,9 @@ client.urgent		    	$grey	$grey	$white		$yellowbrown	$yellowbrown
 # Start i3bar to display a workspace bar
 # (plus the system information i3status finds out, if available)
 bar {
-		font pango: Noto Sans Regular 12
+		font pango: Noto Sans Regular 10
 		status_command i3blocks -c ~/.config/i3/i3blocks.conf
-	    	position top
+	    	position bottom
 #	    	i3bar_command i3bar --transparency
 # it could be that you have no primary display set: set one (xrandr --output <output> --primary)
 # reference: https://i3wm.org/docs/userguide.html#_tray_output
@@ -556,10 +571,8 @@ strip_workspace_numbers yes
 
 ## rofi bindings fancy application menu ($mod+d /F9 optional disabled)
 
-bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
-
-#bindsym $mod+d exec --no-startup-id rofi -modi drun -show drun \
-#		-config ~/.config/rofi/rofidmenu.rasi
+bindsym $mod+d exec --no-startup-id rofi -modi drun -show drun \
+		-config ~/.config/rofi/rofidmenu.rasi
 
 #bindsym F9 exec --no-startup-id rofi -modi drun -show drun \
 #		-config ~/.config/rofi/rofidmenu.rasi
