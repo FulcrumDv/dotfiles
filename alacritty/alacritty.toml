@@ -1,6 +1,6 @@
-import = [
-    "~/.config/alacritty/themes/themes/{github_dark_colorblind}.toml"
-]
+[shell]
+program = "/bin/zsh"
+
 
 [font]
 size = 15.0
@@ -24,3 +24,6 @@ style = "Regular"
 [window]
 opacity = 0.95
 
+#[window.dimensions]
+#columns = 133
+#lines = 40
